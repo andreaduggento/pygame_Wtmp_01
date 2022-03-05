@@ -5,10 +5,9 @@ import time
 import random
 
 
-# colors
 
 sys.path.append('./')
-from main.world.Simulation import Simulation
+from main.world.Simulation import *
 
 
 
@@ -23,7 +22,7 @@ def start():
     # get the default size
     x, y = screen.get_size()
     WORLDSIZE=[min(x,y)-200,min(x,y)-200]
-    simulation = Simulation(WORLDSIZE)
+    simulation = SimulationFlock(WORLDSIZE)
     
     counter =10000
 

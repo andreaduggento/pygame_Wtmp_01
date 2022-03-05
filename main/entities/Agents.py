@@ -1,6 +1,7 @@
 import math 
 import numpy as np
 import pygame
+from main.utils.colors import *
 
 from main.entities.Entity import Entity,OrientedEntity
 # from main.agents.ReactiveAgent import ReactiveAgent
@@ -17,6 +18,7 @@ class Agent(OrientedEntity):
         self.MAX_FORCE = 10.
         self.mass = 1.
         self.omega = 0.
+        self.color = WHITE
 
     def update(self,sim):
         while self.orientation > math.pi:
@@ -33,7 +35,22 @@ class Agent(OrientedEntity):
                     self.position[i] += sim.size[i]
                 elif self.position[i] > sim.size[i]:
                     self.position[i] -= sim.size[i]
+        ## Always check boundaries
+        self.checkboundaries(sim)
+        return self
 
+    def checkboundaries(self,sim):
+        for BOU in sim.roundboundaries :
+            distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
+            if distance < 0 :
+                print("bounching")
+                # updade position
+                angle = self.relative_angle_to(BOU)
+                diff = (BOU.position - self.position) - (BOU.radius + self.radius)
+                print(angle)
+#                self.position = self.position - np.array( [ math.cos(angle)*abs((BOU.position[0] - self.position[0]))   ,  math.sin(angle)*abs(BOU.position[1] - self.position[1]) ])
+                self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
+                self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
 
 
 class InteractiveAgent(Agent):

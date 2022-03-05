@@ -43,8 +43,8 @@ class SimulationFlock:
         self.add_entity(nemo)
         self.target = nemo
         #### SHARKS
-        for i in range(10,12):
-                    shark = Flocker1(self , (300, 50+ i*50) ,"shark{}".format(i) ) 
+        for i in range(10,20):
+                    shark = Flocker1(self , (random.randint(100, 1000),random.randint(100, 1000)) ,"shark{}".format(i) ) 
                     self.add_entity(shark)
 
     def add_entity(self, entity):

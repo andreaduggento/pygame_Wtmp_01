@@ -1,12 +1,11 @@
 import random
 from math import sqrt
 import pygame
+from main.utils.colors import *
 
 def distance_between(a, b):
     return sqrt(((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2))
 
-BLACK = (30, 30, 30)
-WHITE = (200, 200, 200)
 font_name = pygame.font.match_font('arial')
 
 
