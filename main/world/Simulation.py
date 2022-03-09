@@ -35,15 +35,15 @@ class SimulationFlock:
     def create_simulation(self):
         print("create simulation")
 
-        ##### ROUNDBOUNDARY
-        #for i in range(10,20):
-        #    self.add_entity(RoundBoundary(self , (random.randint(100, 1000),random.randint(100, 1000)) , random.randint(10,30), "b{}".format(i) ))       
+        #### ROUNDBOUNDARY
+        for i in range(10,20):
+            self.add_entity(RoundBoundary(self , (random.randint(100, 1000),random.randint(100, 1000)) , random.randint(10,30), "b{}".format(i) ))       
         #### NEMO
         nemo = NemoFish(self , (500,300) ,"nemo1" )       
         self.add_entity(nemo)
         self.target = nemo
         #### SHARKS
-        for i in range(10,12):
+        for i in range(10,20):
                     shark = Flocker1(self , (300, 50+ i*50) ,"shark{}".format(i) ) 
                     self.add_entity(shark)
 
@@ -131,8 +131,8 @@ class Simulation:
         self.add_entity(nemo)
         self.target = nemo
         #### SHARKS
-        for i in range(10,20):
-                    shark = Follower1(self , (random.randint(100, 1000),random.randint(100, 1000)) ,"shark{}".format(i) ) 
+        for i in range(10,18):
+                    shark = Follower2(self , (random.randint(100, 1000),random.randint(100, 1000)) ,"shark{}".format(i) ) 
                     self.add_entity(shark)
 
     def add_entity(self, entity):

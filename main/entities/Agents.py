@@ -36,8 +36,20 @@ class Agent(OrientedEntity):
                 elif self.position[i] > sim.size[i]:
                     self.position[i] -= sim.size[i]
         ## Always check boundaries
-        self.checkboundaries(sim)
+#        self.checkboundaries(sim)
+        self.bounch(sim)
         return self
+
+    def bounch(self,sim):
+        for BOU in sim.entities :
+            if id(BOU)!=id(self):
+                distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
+                if distance < 0 :
+                    angle = self.relative_angle_to(BOU)
+                    diff = (BOU.position - self.position) - (BOU.radius + self.radius)
+                    self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
+                    self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
+
 
     def checkboundaries(self,sim):
         for BOU in sim.roundboundaries :
