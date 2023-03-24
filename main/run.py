@@ -21,7 +21,8 @@ def start():
  
     # get the default size
     x, y = screen.get_size()
-    WORLDSIZE=[x-200,y-200]
+    WORLDSIZE=[x-10,y-10]
+    print(WORLDSIZE)
 #    simulation = SimulationFlock(WORLDSIZE)
     simulation = Simulation(WORLDSIZE)
     

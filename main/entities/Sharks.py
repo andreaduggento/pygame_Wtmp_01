@@ -35,18 +35,18 @@ class Follower2(Agent):
     def __init__(self, simulation, position, name):
         super().__init__(simulation, position, name)
         self.load_image()
-        self.MAX_OMEGA=10.
+        self.MAX_OMEGA=1.
         self.MAX_FORCE=50.
         self.orientation=0.
         self.speed = 30.
         self.color = PALERED
 
     def update(self,sim):
-        differenceNORM  = (sim.target.position-self.position) / np.linalg.norm(self.position - sim.target.position)
         selforientNORM     = np.array([ math.cos(self.orientation) ,  math.sin( self.orientation ) ])
-        self.omega      = self.MAX_OMEGA * np.cross(selforientNORM,differenceNORM)
+        self.omega      = self.MAX_OMEGA * self.relative_normcross_to(sim.target)
         self.force =  self.MAX_FORCE * selforientNORM
         self.keep_distance(sim)
+        self.bite(sim)
         super().update(sim)
 
     def load_image(self):
@@ -63,7 +63,13 @@ class Follower2(Agent):
                     differenceNORM  = (other.position-self.position) / np.linalg.norm(self.position - other.position)
                     selforientNORM     = np.array([ math.cos(self.orientation) ,  math.sin( self.orientation ) ])
                     self.omega  += - 0.5 * self.MAX_OMEGA * np.cross(selforientNORM,differenceNORM)
- 
+
+    def bite(self,sim):
+        distance = np.linalg.norm(sim.target.position - self.position) - (sim.target.radius + self.radius)
+        if distance < 0 :
+            sim.target.decrease_energy(1.) 
+            sim.target.updatecolor()
+
 #                # updade position
 #                    angle = self.relative_angle_to(other)
 #                    diff = (other.position - self.position) - (other.radius + self.radius)

@@ -41,7 +41,15 @@ class Agent(OrientedEntity):
         return self
 
     def bounch(self,sim):
-        for BOU in sim.entities :
+        for BOU in sim.agents :
+            if id(BOU)!=id(self):
+                distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
+                if distance < 0 :
+                    angle = self.relative_angle_to(BOU)
+                    diff = (BOU.position - self.position) - (BOU.radius + self.radius)
+                    self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
+                    self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
+        for BOU in sim.roundboundaries :
             if id(BOU)!=id(self):
                 distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
                 if distance < 0 :
@@ -51,18 +59,19 @@ class Agent(OrientedEntity):
                     self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
 
 
-    def checkboundaries(self,sim):
-        for BOU in sim.roundboundaries :
-            distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
-            if distance < 0 :
-                print("bounching")
-                # updade position
-                angle = self.relative_angle_to(BOU)
-                diff = (BOU.position - self.position) - (BOU.radius + self.radius)
-                print(angle)
-#                self.position = self.position - np.array( [ math.cos(angle)*abs((BOU.position[0] - self.position[0]))   ,  math.sin(angle)*abs(BOU.position[1] - self.position[1]) ])
-                self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
-                self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
+
+##     def checkboundaries(self,sim):
+##         for BOU in sim.roundboundaries :
+##             distance = np.linalg.norm(BOU.position - self.position) - (BOU.radius + self.radius)
+##             if distance < 0 :
+##                 print("bounching")
+##                 # updade position
+##                 angle = self.relative_angle_to(BOU)
+##                 diff = (BOU.position - self.position) - (BOU.radius + self.radius)
+##                 print(angle)
+## #                self.position = self.position - np.array( [ math.cos(angle)*abs((BOU.position[0] - self.position[0]))   ,  math.sin(angle)*abs(BOU.position[1] - self.position[1]) ])
+##                 self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
+##                 self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
 
 
 class InteractiveAgent(Agent):
