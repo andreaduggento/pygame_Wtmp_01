@@ -90,6 +90,12 @@ class OrientedEntity(Entity):
         selforientNORM  = np.array([ math.cos(self.orientation) ,  math.sin( self.orientation ) ])
         return np.cross(selforientNORM,differenceNORM)    # always between -1 and 1 
 
+    def relative_normdot_to(self,entity):
+        differenceNORM  = self.relative_distanceNORM_to(entity)
+        selforientNORM  = np.array([ math.cos(self.orientation) ,  math.sin( self.orientation ) ])
+        return np.dot(selforientNORM,differenceNORM)    # always between -1 and 1 
+
+
 
     def draw(self, world):
         pygame.draw.circle(world.screen, self.color , [self.position[0], world.size[1]-self.position[1]] , self.radius)

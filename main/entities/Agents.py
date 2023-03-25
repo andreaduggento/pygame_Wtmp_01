@@ -4,6 +4,7 @@ import pygame
 from main.utils.colors import *
 
 from main.entities.Entity import Entity,OrientedEntity
+from main.brains.Brains import *
 # from main.agents.ReactiveAgent import ReactiveAgent
 # from main.utils.Pathfinding import path_finding
 
@@ -19,6 +20,12 @@ class Agent(OrientedEntity):
         self.mass = 1.
         self.omega = 0.
         self.color = WHITE
+        self.load_image()
+        self.MAX_OMEGA= simulation.DeltaT * 500.
+        self.MAX_FORCE=100.
+        self.color = (130,130,130)
+        self.energy = 0.
+
 
     def update(self,sim):
         while self.orientation > math.pi:
@@ -39,6 +46,12 @@ class Agent(OrientedEntity):
 #        self.checkboundaries(sim)
         self.bounch(sim)
         return self
+
+    def load_image(self):
+        self.image = pygame.image.load("main/images/prototype_A01_32.png")
+        self.images_loaded = True
+        self.radius = 0.5*self.get_sizes()[0] 
+
 
     def bounch(self,sim):
         for BOU in sim.agents :
@@ -119,7 +132,44 @@ class InteractiveAgent(Agent):
 
 
 class IntelligentAgent(Agent):
+
     def __init__(self, simulation, position, name):
         super().__init__(simulation, position, name)
+        self.brain = annBrain(3,3)
+        self.omega=0.05*self.MAX_OMEGA
+
+    def load_image(self):
+        self.image = pygame.image.load("main/images/prototype_A04_32.png")
+        self.images_loaded = True
+        self.radius = 0.5*self.get_sizes()[0] 
+
+    def __del__(self):
+        print("Deleting intelligent agent"+self.name)
+
+    def eatpollen(self,sim):
+        for pollen in sim.pollens :
+            distance = np.linalg.norm(pollen.position - self.position) - (pollen.radius + self.radius)
+            if distance < 0 :
+                self.energy = self.energy + 1.
+                self.updatecolor()
+                sim.remove_entity(pollen)
+
+    def decrease_energy(self,energy):
+            self.energy = self.energy - energy
+
+    def updatecolor(self):
+        self.color = (130,max(0,min(255,130+10*self.energy)),130)
+
+    def update(self,sim):
+        self.perceivepollen(sim)
+        super().update(sim)
+
+    def perceivepollen(self,sim):
+        for pollen in sim.pollens :
+            distance = np.linalg.norm(pollen.position - self.position) - (pollen.radius + self.radius)
+            if distance < 100 :
+                print(self.relative_normdot_to(pollen))
+            
+
 
 

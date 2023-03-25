@@ -25,7 +25,6 @@ class World:
         self.size = worldsize
         self.screen = pygame.display.set_mode((self.get_world_width(), self.get_world_height()))
 
-
     def get_world_width(self):
         return self.size[0]
 

@@ -21,13 +21,13 @@ def start():
  
     # get the default size
     x, y = screen.get_size()
-    WORLDSIZE=[x-10,y-10]
+    WORLDSIZE=[x-300,y-100]
     print(WORLDSIZE)
 #    simulation = SimulationFlock(WORLDSIZE)
-    simulation = Simulation(WORLDSIZE)
+    simulation = EdiacaranZoo(WORLDSIZE)
     
     counter =10000
-
+    
     # Run
     while counter >0:
         simulation.update()
@@ -37,7 +37,7 @@ def start():
                 gameExit = True
             else:
                 simulation.process_event(event)
-#        counter-=1
+        counter-=1
 
 if __name__ == "__main__":
     start()
