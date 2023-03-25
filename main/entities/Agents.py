@@ -137,6 +137,20 @@ class IntelligentAgent(Agent):
         super().__init__(simulation, position, name)
         self.brain = annBrain(3,3)
         self.omega=0.05*self.MAX_OMEGA
+        self.neyes = 3
+        self.halfaperture = 0.7     # in radiants
+        self.eyesthreshold = 0.7    # threshold from 0 to 1
+        self.eyesradpos = np.zeros(self.neyes, dtype=float)
+#        self.eyespos = np.zeros((self.neyes,2), dtype=float)
+        self.init_eyes_pos(self.neyes,self.halfaperture) 
+
+
+    def init_eyes_pos(self,neyes,halfaperture): 
+        # halfaperture is the angle displacement of outermost eye expressed in rad
+        for i in range(self.neyes):
+            self.eyesradpos[i] = -halfaperture + 2.*(i/(self.neyes-1))*halfaperture
+#            self.eyespos[i] = np.array([math.cos(-halfaperture + 2.*(i/(self.neyes-1))*halfaperture),math.sin(-halfaperture + 2.*(i/(self.neyes-1))*halfaperture) ])
+        print(self.eyesradpos)
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A04_32.png")
@@ -167,8 +181,8 @@ class IntelligentAgent(Agent):
     def perceivepollen(self,sim):
         for pollen in sim.pollens :
             distance = np.linalg.norm(pollen.position - self.position) - (pollen.radius + self.radius)
-            if distance < 100 :
-                print(self.relative_normdot_to(pollen))
+            if distance < 50 :
+                print(self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold))
             
 
 

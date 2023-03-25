@@ -95,6 +95,15 @@ class OrientedEntity(Entity):
         selforientNORM  = np.array([ math.cos(self.orientation) ,  math.sin( self.orientation ) ])
         return np.dot(selforientNORM,differenceNORM)    # always between -1 and 1 
 
+    def relative_biased_normdot_to(self,entity,eyesradpos,threshold):
+        differenceNORM  = self.relative_distanceNORM_to(entity)
+        output = np.zeros(len(eyesradpos))
+        for i,bias in enumerate(eyesradpos):
+            biasedselforientNORM  = np.array([ math.cos(self.orientation+bias) ,  math.sin( self.orientation+bias ) ])
+            output[i] = np.dot(biasedselforientNORM , differenceNORM)  
+        output[output < threshold] = 0
+        return output    # always between -1 and 1 
+
 
 
     def draw(self, world):
