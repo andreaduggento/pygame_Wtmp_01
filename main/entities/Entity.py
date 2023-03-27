@@ -23,8 +23,9 @@ class Entity:
         self.color = WHITE
         self.radius =0.
 
-    def __del__(self):
-        print("Deleting entity")
+#    def __del__(self):
+#        print("Deleting entity")
+#        super().__del__()
 
 
     def get_sizes(self):
@@ -36,6 +37,10 @@ class Entity:
 ##    def relative_angle_to(self,entity):
 ##        diff = entity.position - self.position
 ##        return np.arctan2(diff[1] , diff[0])   # always between -pi and pi
+
+    def set_position(self,position):
+        self.position = 1.*np.asarray(position)
+        
 
     def relative_angle_to(self,entity):
         diff = entity.position - self.position
@@ -103,8 +108,6 @@ class OrientedEntity(Entity):
             output[i] = np.dot(biasedselforientNORM , differenceNORM)  
         output[output < threshold] = 0
         return output    # always between -1 and 1 
-
-
 
     def draw(self, world):
         pygame.draw.circle(world.screen, self.color , [self.position[0], world.size[1]-self.position[1]] , self.radius)

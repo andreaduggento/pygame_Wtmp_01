@@ -15,8 +15,6 @@ class Agent(OrientedEntity):
         self.vel = np.asarray([0.,0.])
         self.acc = np.asarray([0.,0.])
         self.force= 0.
-        self.MAX_OMEGA = 10.
-        self.MAX_FORCE = 10.
         self.mass = 1.
         self.omega = 0.
         self.color = WHITE
@@ -24,10 +22,13 @@ class Agent(OrientedEntity):
         self.MAX_OMEGA= simulation.DeltaT * 500.
         self.MAX_FORCE=100.
         self.color = (130,130,130)
-        self.energy = 0.
-
+        self.energy = 0.5               # from 0 to 1
+        self.metabolic_rate = 0.01                               # basal energy consumption per unit of DeltaT
+        self.metabolicspeed = self.metabolic_rate / self.MAX_FORCE  # active energy consumption per unit of force, per unit of DeltaT
 
     def update(self,sim):
+        if (self.energy < 0.):
+            self.die(sim)
         while self.orientation > math.pi:
             self.orientation -= 2*math.pi
         while self.orientation < -2*math.pi:
@@ -47,11 +48,17 @@ class Agent(OrientedEntity):
         self.bounch(sim)
         return self
 
+    def get_energy(self):
+        return self.energy
+  
+
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A01_32.png")
         self.images_loaded = True
         self.radius = 0.5*self.get_sizes()[0] 
 
+    def die(self,sim):
+        sim.agent_die(self)
 
     def bounch(self,sim):
         for BOU in sim.agents :
@@ -133,57 +140,97 @@ class InteractiveAgent(Agent):
 
 class IntelligentAgent(Agent):
 
-    def __init__(self, simulation, position, name):
+    def __init__(self, simulation, position, name, brain=None ):
         super().__init__(simulation, position, name)
-        self.brain = annBrain(3,3)
+        if brain==None : 
+            self.brain = annBrain(3,3)
+        else: 
+            self.brain = brain
         self.omega=0.05*self.MAX_OMEGA
         self.neyes = 3
+        self.eyerange = 150 
+        self.perception = np.zeros(self.neyes, dtype=float)
         self.halfaperture = 0.7     # in radiants
-        self.eyesthreshold = 0.7    # threshold from 0 to 1
+        self.eyesthreshold = 0.75    # threshold from 0 to 1
         self.eyesradpos = np.zeros(self.neyes, dtype=float)
 #        self.eyespos = np.zeros((self.neyes,2), dtype=float)
         self.init_eyes_pos(self.neyes,self.halfaperture) 
+        self.showvisibility = False
 
+
+    def update(self,sim):
+        self.interract_with_pollens(sim)
+        self.actuate()
+        self.energy -= ( self.metabolic_rate +  np.linalg.norm(self.force)*self.metabolicspeed   )  * sim.DeltaT 
+        self.updatecolor()
+        super().update(sim)
 
     def init_eyes_pos(self,neyes,halfaperture): 
         # halfaperture is the angle displacement of outermost eye expressed in rad
         for i in range(self.neyes):
             self.eyesradpos[i] = -halfaperture + 2.*(i/(self.neyes-1))*halfaperture
 #            self.eyespos[i] = np.array([math.cos(-halfaperture + 2.*(i/(self.neyes-1))*halfaperture),math.sin(-halfaperture + 2.*(i/(self.neyes-1))*halfaperture) ])
-        print(self.eyesradpos)
+#        print(self.eyesradpos)
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A04_32.png")
         self.images_loaded = True
         self.radius = 0.5*self.get_sizes()[0] 
 
-    def __del__(self):
-        print("Deleting intelligent agent"+self.name)
+#    def __del__(self):
+#        print("Deleting intelligent agent"+self.name)
 
-    def eatpollen(self,sim):
-        for pollen in sim.pollens :
-            distance = np.linalg.norm(pollen.position - self.position) - (pollen.radius + self.radius)
-            if distance < 0 :
-                self.energy = self.energy + 1.
-                self.updatecolor()
-                sim.remove_entity(pollen)
+    def eatpollen(self,sim,pollen):
+            self.energy = self.energy + pollen.get_energy() 
+            #sim.remove_entity(pollen)
+            #sim.respawn_entity(pollen)
+            sim.pollen_eaten(pollen)
+
 
     def decrease_energy(self,energy):
             self.energy = self.energy - energy
 
     def updatecolor(self):
-        self.color = (130,max(0,min(255,130+10*self.energy)),130)
+        self.color = ( 130 , max(0 , min( 255 ,  255 * self.energy )) , 130 )
 
-    def update(self,sim):
-        self.perceivepollen(sim)
-        super().update(sim)
+    def perceivepollen(self,sim,pollen,distance):
+            pollen.make_invisible()
+            if distance < self.eyerange :
+                tmp =  (  2. * pollen.radius * self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold) / distance )
+                if ( tmp.sum() > 0.000000000001 ):
+                    if (self.showvisibility): pollen.make_visible()
+                self.perception = self.perception + tmp
+                # self.perception = self.perception + (10* self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold) / distance )
 
-    def perceivepollen(self,sim):
+    def interract_with_pollens(self,sim):
+        self.perception[:] = 0.
         for pollen in sim.pollens :
             distance = np.linalg.norm(pollen.position - self.position) - (pollen.radius + self.radius)
-            if distance < 50 :
-                print(self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold))
-            
+            if distance < 0 :
+                self.eatpollen(sim,pollen) 
+            else:
+                self.perceivepollen(sim,pollen,distance)
 
+    def actuate(self):
+        x = self.brain.forward(torch.from_numpy(self.perception))
+        force = x[0].item()
+        left  = x[1].item()
+        right=  x[2].item()
+        # print(left,force,right)
+        self.omega = self.MAX_OMEGA * (right - left)/6.     
+        if (force > 0.):
+            self.force =  force * np.array([ math.cos(self.orientation)*self.MAX_FORCE ,  math.sin( self.orientation )*self.MAX_FORCE ])
+
+    def print_brain(self):
+        self.brain.print_ann()
+
+
+    def reproduce(self,sim):
+        newbrain = self.brain.reproduce()
+        nemo = IntelligentAgent(sim,self.position, self.name+"G",newbrain)
+        return nemo
+        
+    def turnvisibility(self,visibility):
+        self.showvisibility = visibility
 
 
