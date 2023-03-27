@@ -142,10 +142,6 @@ class IntelligentAgent(Agent):
 
     def __init__(self, simulation, position, name, brain=None ):
         super().__init__(simulation, position, name)
-        if brain==None : 
-            self.brain = annBrain(3,3)
-        else: 
-            self.brain = brain
         self.omega=0.05*self.MAX_OMEGA
         self.neyes = 3
         self.eyerange = 150 
@@ -194,9 +190,9 @@ class IntelligentAgent(Agent):
         self.color = ( 130 , max(0 , min( 255 ,  255 * self.energy )) , 130 )
 
     def perceivepollen(self,sim,pollen,distance):
-            pollen.make_invisible()
+            if (self.showvisibility): pollen.make_invisible()
             if distance < self.eyerange :
-                tmp =  (  2. * pollen.radius * self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold) / distance )
+                tmp =  (  2. * pollen.radius * self.relative_biased_normdot_to(pollen,self.eyesradpos,self.eyesthreshold) / (distance+0.0001) )
                 if ( tmp.sum() > 0.000000000001 ):
                     if (self.showvisibility): pollen.make_visible()
                 self.perception = self.perception + tmp
@@ -217,20 +213,47 @@ class IntelligentAgent(Agent):
         left  = x[1].item()
         right=  x[2].item()
         # print(left,force,right)
-        self.omega = self.MAX_OMEGA * (right - left)/6.     
+        self.omega = self.MAX_OMEGA * (right - left)     
         if (force > 0.):
             self.force =  force * np.array([ math.cos(self.orientation)*self.MAX_FORCE ,  math.sin( self.orientation )*self.MAX_FORCE ])
 
     def print_brain(self):
-        self.brain.print_ann()
+        self.brain.printbrain()
+       
+    def turnvisibility(self,visibility):
+        self.showvisibility = visibility
+
+
+class annAgent(IntelligentAgent):
+    def __init__(self, simulation, position, name, brain=None ):
+        if brain==None : 
+            self.brain = annBrain(3,3)
+        else: 
+            self.brain = brain
+        super().__init__(simulation, position, name)
+
+    def reproduce(self,sim):
+        newbrain = self.brain.reproduce()
+        nemo = annAgent(sim,self.position, self.name+"G",newbrain)
+        return nemo
+
+class rnnAgent(IntelligentAgent):
+    def __init__(self, simulation, position, name, brain=None ):
+        if brain==None : 
+            self.brain = rnnBrain(3,3)
+        else: 
+            self.brain = brain
+        super().__init__(simulation, position, name)
+
+    def load_image(self):
+        self.image = pygame.image.load("main/images/prototype_A02_32.png")
+        self.images_loaded = True
+        self.radius = 0.5*self.get_sizes()[0] 
 
 
     def reproduce(self,sim):
         newbrain = self.brain.reproduce()
-        nemo = IntelligentAgent(sim,self.position, self.name+"G",newbrain)
+        nemo = rnnAgent(sim,self.position, self.name+"G",newbrain)
         return nemo
-        
-    def turnvisibility(self,visibility):
-        self.showvisibility = visibility
-
+ 
 

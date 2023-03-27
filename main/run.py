@@ -36,7 +36,7 @@ def start():
         pygame.display.update()
         if ((counter % 50) == 0) :
             simulation.print_best_agent()
-            print("  N.Agents: {}".format(simulation.n_agent())+"   average energy: {}".format(round(simulation.average_agent_energy(),4)),end='\r')
+            print(" count:{}".format(counter)+"  N.Agents: {}".format(simulation.n_agent())+"   average energy: {}".format(round(simulation.average_agent_energy(),4)),end='\r')
         if (simulation.n_agent()<2):
             simulation.print_agents()
             GO=False

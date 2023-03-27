@@ -117,11 +117,12 @@ class Simulation:
     def update(self):
         # steps
         now = datetime.now()
-        if now >= self.next_step_time:
-            for agent in self.agents:
-                agent.update(self)
-            self.next_step_time = now + self.TIME_STEP
-            self.current_step += 1
+        #if now >= self.next_step_time:
+        for agent in self.agents:
+            agent.update(self)
+        self.next_step_time = now + self.TIME_STEP
+        self.current_step += 1
+
         # draws all world objects
         self.world.draw(self, self.entities)
 
@@ -160,7 +161,7 @@ class CambrianZoo(Simulation):
             self.add_entity(pollen)
         #### ROUNDBOUNDARY
         for i in range(10,20):
-            self.add_entity(RoundBoundary(self , (random.randint(100, 1000),random.randint(100, 1000)) , random.randint(10,30), "b{}".format(i) ))       
+            self.add_entity(RoundBoundary(self , (random.randint(100, 1000),random.randint(100, 1000)) , random.randint(10,30), "b{}".format(i) )) 
         #### NEMO
         nemo = NemoFish(self , (500,300) ,"nemo1" )       
         self.add_entity(nemo)
@@ -173,8 +174,8 @@ class CambrianZoo(Simulation):
 
 class EdiacaranZoo(Simulation):
 
-    intelligent_agent_surface_density = .000012
-    pollen_surface_density = .00007
+    intelligent_agent_surface_density = .000006
+    pollen_surface_density = .00008
 
 
     def __init__(self,worldsize):
@@ -189,13 +190,17 @@ class EdiacaranZoo(Simulation):
         #### NEMO
         #nemo = NemoFish(self , (500,300) ,"nemo1" )       
         for i in range(1, round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
-            nemo = IntelligentAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "nemo{}".format(i) )       
+            nemo = annAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "nemo{}".format(i) )       
             self.add_entity(nemo)
         #self.target = nemo
 
+        for i in range(1, round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
+            nemo = rnnAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "nemo{}".format(i) )       
+            self.add_entity(nemo)
+        #self.target = nemo
    
     def pollen_eaten(self,pollen):
-        if self.average_agent_energy() < .5 :
+        if self.average_agent_energy() < .9 :
             self.respawn_entity(pollen)
         else:
             self.remove_entity(pollen)
