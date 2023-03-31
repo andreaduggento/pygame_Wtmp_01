@@ -2,6 +2,7 @@ import math
 import numpy as np
 import pygame
 from main.utils.colors import *
+from main.utils.utils import *
 
 from main.entities.Entity import Entity,OrientedEntity
 from main.brains.Brains import *
@@ -22,13 +23,21 @@ class Agent(OrientedEntity):
         self.MAX_OMEGA= simulation.DeltaT * 500.
         self.MAX_FORCE=100.
         self.color = (130,130,130)
-        self.energy = 0.5               # from 0 to 1
+        self.energycolor = (130,130,130)
+        self.DefaultEnergy = 0.5               
+        self.energy = self.DefaultEnergy               # from 0 to 1
         self.metabolic_rate = 0.01                               # basal energy consumption per unit of DeltaT
         self.metabolicspeed = self.metabolic_rate / self.MAX_FORCE  # active energy consumption per unit of force, per unit of DeltaT
+        self.metabolicomega = self.metabolic_rate                # active energy consumption per unit of force, per unit of omega
+        self.energyTotInOut = np.zeros(4)
 
     def update(self,sim):
         if (self.energy < 0.):
             self.die(sim)
+        if (self.energy > 2*self.DefaultEnergy):
+            self.energy -= self.DefaultEnergy
+            sim.agent_born(self)
+
         while self.orientation > math.pi:
             self.orientation -= 2*math.pi
         while self.orientation < -2*math.pi:
@@ -50,7 +59,15 @@ class Agent(OrientedEntity):
 
     def get_energy(self):
         return self.energy
-  
+        
+    def get_energyTotInOut(self):
+        return self.energyTotInOut
+ 
+    def set_default_energy(self):
+        self.energy = self.DefaultEnergy
+ 
+    def set_energy(self,energy):
+        self.energy = energy 
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A01_32.png")
@@ -77,6 +94,10 @@ class Agent(OrientedEntity):
                     diff = (BOU.position - self.position) - (BOU.radius + self.radius)
                     self.position = self.position + distance*np.array( [ math.cos(angle) ,  math.sin(angle) ])
                     self.vel      = self.vel - 2 * np.array( [ math.cos(angle)*abs(self.vel[0]) , math.sin( angle )*abs(self.vel[1])  ])
+
+    def reproduce(self,sim):
+        offspring = Agent(sim,self.position, "agent_"+randomname(10))
+        return offspring
 
 
 
@@ -157,7 +178,8 @@ class IntelligentAgent(Agent):
     def update(self,sim):
         self.interract_with_pollens(sim)
         self.actuate()
-        self.energy -= ( self.metabolic_rate +  np.linalg.norm(self.force)*self.metabolicspeed   )  * sim.DeltaT 
+        self.energyTotInOut = self.energyTotInOut +  sim.DeltaT*np.asarray([self.metabolic_rate, np.linalg.norm(self.force)*self.metabolicspeed,abs(self.omega)*self.metabolicomega,0.])
+        self.energy -= ( self.metabolic_rate +  np.linalg.norm(self.force)*self.metabolicspeed + abs(self.omega)*self.metabolicomega  )  * sim.DeltaT 
         self.updatecolor()
         super().update(sim)
 
@@ -178,8 +200,7 @@ class IntelligentAgent(Agent):
 
     def eatpollen(self,sim,pollen):
             self.energy = self.energy + pollen.get_energy() 
-            #sim.remove_entity(pollen)
-            #sim.respawn_entity(pollen)
+            self.energyTotInOut +=  np.asarray([ 0. , 0. , 0.  , pollen.get_energy() ]) 
             sim.pollen_eaten(pollen)
 
 
@@ -187,7 +208,16 @@ class IntelligentAgent(Agent):
             self.energy = self.energy - energy
 
     def updatecolor(self):
-        self.color = ( 130 , max(0 , min( 255 ,  255 * self.energy )) , 130 )
+#        self.energycolor = ( 130 , max(0 , min( 255 ,  255 * self.energy )) , 130 )
+        self.energycolor = ( max(50 , min( 200 ,  200 * (1-self.energy) ))  , max(50 , min( 200 ,  200 * self.energy )) , 30 )
+
+
+    def draw(self, world):
+        self.color = self.energycolor
+        super().draw(world)
+        #pygame.draw.circle(world.screen, BLACK , [self.position[0], world.size[1]-self.position[1]] , 6)
+        #pygame.draw.circle(world.screen, self.energycolor , [self.position[0], world.size[1]-self.position[1]] , 5)
+
 
     def perceivepollen(self,sim,pollen,distance):
             if (self.showvisibility): pollen.make_invisible()
@@ -217,9 +247,21 @@ class IntelligentAgent(Agent):
         if (force > 0.):
             self.force =  force * np.array([ math.cos(self.orientation)*self.MAX_FORCE ,  math.sin( self.orientation )*self.MAX_FORCE ])
 
+    def print_agent(self):
+        print("agent "+ self.name+"; energy={}".format(round(self.energy,4)) + " force={}".format( self.force)  + " omega={}".format(round(self.omega,4)))
+
+    def print_to_file(self,file1):
+        L = ["Agent: "+ self.name + " Energy components: [" +  ' '.join(map(str, self.get_energyTotInOut())) + "] Current energy: " +  ' {}'.format(self.get_energy()) + '\n' ]
+        file1.writelines(L)
+        self.print_brain_to_file(file1)
+
     def print_brain(self):
         self.brain.printbrain()
-       
+
+    def print_brain_to_file(self,file1):
+        self.brain.printbrain_to_file(file1)
+
+
     def turnvisibility(self,visibility):
         self.showvisibility = visibility
 
@@ -232,10 +274,15 @@ class annAgent(IntelligentAgent):
             self.brain = brain
         super().__init__(simulation, position, name)
 
+    def load_image(self):
+        self.image = pygame.image.load("main/images/prototype_A04_32.png")
+        self.images_loaded = True
+        self.radius = 0.5*self.get_sizes()[0] 
+
     def reproduce(self,sim):
         newbrain = self.brain.reproduce()
-        nemo = annAgent(sim,self.position, self.name+"G",newbrain)
-        return nemo
+        offspring = annAgent(sim,self.position, "annNemo_"+randomname(10),newbrain)
+        return offspring
 
 class rnnAgent(IntelligentAgent):
     def __init__(self, simulation, position, name, brain=None ):
@@ -253,7 +300,13 @@ class rnnAgent(IntelligentAgent):
 
     def reproduce(self,sim):
         newbrain = self.brain.reproduce()
-        nemo = rnnAgent(sim,self.position, self.name+"G",newbrain)
-        return nemo
+        offspring = rnnAgent(sim,self.position,  "rnnNemo_"+randomname(10),newbrain)
+        return offspring
  
+
+    def draw(self, world):
+        super().draw(world)
+        pygame.draw.circle(world.screen, BLACK , [self.position[0], world.size[1]-self.position[1]] , 6)
+        pygame.draw.circle(world.screen, self.energycolor , [self.position[0], world.size[1]-self.position[1]] , 4)
+
 

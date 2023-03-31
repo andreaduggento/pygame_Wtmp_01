@@ -40,7 +40,6 @@ class Entity:
 
     def set_position(self,position):
         self.position = 1.*np.asarray(position)
-        
 
     def relative_angle_to(self,entity):
         diff = entity.position - self.position

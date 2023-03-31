@@ -1,5 +1,8 @@
 from __future__ import annotations
 import random
+import string
+import pygame
+import time
 from datetime import datetime, timedelta
 from main.entities.Agents import *
 from main.entities.Pollen import Pollen
@@ -7,6 +10,7 @@ from main.entities.RoundBoundary import RoundBoundary
 from main.entities.NemoFish import *
 from main.entities.Sharks import *
 from main.world.World import World, distance_between
+import numpy as np
 
 class Simulation:
 
@@ -16,7 +20,8 @@ class Simulation:
     VERBOSE = False
     FRICTION = 1.
 
-    def __init__(self,worldsize):
+
+    def __init__(self,worldsize, agentstatFile = None , decimationstatFile = None ,  printreproductiveAgent = True ):
         self.size=worldsize
         self.entities = []
         self.pollens = []
@@ -31,8 +36,11 @@ class Simulation:
         self.current_step = 1
 
         ''' # statistics '''
-#        self.persons_solved = 0
-#        self.spots_solved = 0
+        self.agentstatFile=agentstatFile
+        self.decimation_number = 0
+        self.printreproductiveAgent=printreproductiveAgent
+        if printreproductiveAgent:
+            self.bestagentfilename = "reproductiveagent_"+ time.strftime("%Y%m%d-%H%M%S")+ ".txt"
 
     def populate_zoo(self):
         return
@@ -85,19 +93,92 @@ class Simulation:
         entity.set_position(new_position)
         
     def agent_die(self,deadagent):
-        # search for best agent
-        max_energy = -1.
-        bestAgent = None
-        for tmpagent in self.agents:
-            if max_energy < tmpagent.get_energy(): 
-                max_energy = tmpagent.get_energy()
-                bestAgent = tmpagent
-        # reproduce best agent
-        newagent = bestAgent.reproduce(self)
+        # return energy to environment
+        energy=deadagent.DefaultEnergy
+        while energy > 0.:
+            pollen = Pollen(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "pollenflake" )
+            energy -= pollen.energy
+            self.add_entity(pollen)
+        self.remove_entity(deadagent)
+
+
+    def agent_born(self,parentagent):
+        if self.printreproductiveAgent:  self.print_agent_to_file(parentagent)
+        if self.agentstatFile is not None: self.printagent(parentagent)
+        newagent = parentagent.reproduce(self)
         self.add_entity(newagent)
         self.respawn_entity(newagent)
-        # remove dead agent
-        self.remove_entity(deadagent)
+
+    def print_agent_to_file(self,agent):
+        file1 = open(self.bestagentfilename, "w")
+        agent.print_to_file(file1)
+        file1.close()
+
+
+#    def agent_die(self,deadagent):
+#        # search for best agent
+#        max_energy = -1.
+#        bestAgent = None
+#        for tmpagent in self.agents:
+#            if max_energy < tmpagent.get_energy(): 
+#                max_energy = tmpagent.get_energy()
+#                bestAgent = tmpagent
+#        # reproduce best agent
+#        newagent = bestAgent.reproduce(self)
+#        newagent.set_energy(self.median_agent_energy())
+#        self.add_entity(newagent)
+#        self.respawn_entity(newagent)
+#        # remove dead agent
+#        self.remove_entity(deadagent)
+
+
+#    def decimation(self):
+#        self.decimation_number +=1
+#        q=0.25
+#        upper_quantile = self.agent_energy_quantile(1-q)
+#        lower_quantile = self.agent_energy_quantile(q)
+#        agentstobeadded = []
+#        agentstoberemoved = []
+#        for agent in self.agents:
+#            if upper_quantile <= agent.get_energy():
+#                if self.agentstatFile is not None: self.printagent(agent)
+#                newagent = agent.reproduce(self)
+#                agentstobeadded.append(newagent)
+#            elif lower_quantile < agent.get_energy():
+#                agentstoberemoved.append(agent)
+#        for oldagent in agentstoberemoved:
+#            self.remove_entity(oldagent)
+#        for newagent in agentstobeadded:
+#            self.add_entity(newagent)
+#            self.respawn_entity(newagent)                      
+#            newagent.set_energy(lower_quantile) 
+
+    def printagent(self,agent):
+        if self.agentstatFile is not None:
+                L = [agent.name + ' {} '.format(self.decimation_number) + ' '.join(map(str, agent.get_energyTotInOut())) +  ' {}'.format(agent.get_energy()) + '\n' ]
+                self.agentstatFile.writelines(L)
+        
+
+#    def agent_die(self,deadagent):
+#        self.decimation_number +=1
+#        median_energy = self.median_agent_energy()
+#        agentstobeadded = []
+#        agentstoberemoved = []
+#        for tmpagent in self.agents:
+#            if self.agentstatFile is not None:
+#                L = [tmpagent.name + ' {} '.format(self.decimation_number) + ' '.join(map(str, tmpagent.get_energyTotInOut())) + '\n' ]
+#                self.agentstatFile.writelines(L)
+#            if median_energy <= tmpagent.get_energy():
+#                newagent = tmpagent.reproduce(self)
+#                agentstobeadded.append(newagent)
+#            else:
+#                agentstoberemoved.append(tmpagent)
+#        for oldagent in agentstoberemoved:
+#            self.remove_entity(oldagent)
+#        for newagent in agentstobeadded:
+#            self.add_entity(newagent)
+#            self.respawn_entity(newagent)                      
+#            newagent.set_default_energy() 
 
     def print_best_agent(self):
         # search for best agent
@@ -108,7 +189,8 @@ class Simulation:
             if max_energy < agent.get_energy(): 
                 max_energy = agent.get_energy()
                 bestAgent = agent
-        bestAgent.print_brain()
+#        bestAgent.print_brain(file1=None)
+#        bestAgent.print_agent(file1=None)
         bestAgent.turnvisibility(True)
 
     def pollen_eaten(self,pollen):
@@ -126,6 +208,29 @@ class Simulation:
         # draws all world objects
         self.world.draw(self, self.entities)
 
+    def median_agent_energy(self):
+        energies = np.zeros(len(self.agents))
+        for k,agent in enumerate(self.agents):
+            energies[k] = agent.get_energy()
+        median = np.median(energies,overwrite_input=True)
+        print(energies)
+        print("median={}".format(median))
+        return median
+
+    def total_agent_energy(self):
+        energy = 0. 
+        for agent in self.agents:
+            energy += agent.get_energy()
+        return energy
+
+
+    def agent_energy_quantile(self,q):
+        energies = np.zeros(len(self.agents))
+        for k,agent in enumerate(self.agents):
+            energies[k] = agent.get_energy()
+        return  np.quantile(energies,q,overwrite_input=True)
+
+
     def average_agent_energy(self):
         average_energy = 0.
         for agent in self.agents:
@@ -142,16 +247,12 @@ class Simulation:
             if isinstance(agent,IntelligentAgent):
                 agent.print_brain()
         
-
     def process_event(self,event):
-            for agent in self.interactiveagents:
-                agent.process_event(event)
+        for agent in self.interactiveagents:
+            agent.process_event(event)
 
 
 class CambrianZoo(Simulation):
-
-    def __init__(self,worldsize):
-        super().__init__(worldsize)
 
     def populate_zoo(self):
         print("create simulation")
@@ -174,12 +275,9 @@ class CambrianZoo(Simulation):
 
 class EdiacaranZoo(Simulation):
 
-    intelligent_agent_surface_density = .000006
-    pollen_surface_density = .00008
-
-
-    def __init__(self,worldsize):
-        super().__init__(worldsize)
+    intelligent_agent_surface_density = 1.0e-5
+    pollen_surface_density = 1.0e-4 
+    pollen_threshold = 0.9
 
     def populate_zoo(self):
         print("create simulation")
@@ -189,21 +287,30 @@ class EdiacaranZoo(Simulation):
             self.add_entity(pollen)
         #### NEMO
         #nemo = NemoFish(self , (500,300) ,"nemo1" )       
-        for i in range(1, round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
-            nemo = annAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "nemo{}".format(i) )       
+        for i in range(10,11 + round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
+            nemo = annAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "annNemo{}_".format(i) )       
             self.add_entity(nemo)
         #self.target = nemo
 
-        for i in range(1, round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
-            nemo = rnnAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "nemo{}".format(i) )       
+        for i in range(10,11 + round(self.intelligent_agent_surface_density * self.world.size[0] * self.world.size[1]) ):
+            nemo = rnnAgent(self ,  (random.randint(0,self.world.size[0]),random.randint(0,self.world.size[1])), "rnnNemo{}_".format(i) )       
             self.add_entity(nemo)
         #self.target = nemo
+        self.embodied_energy = self.total_agent_energy()
    
     def pollen_eaten(self,pollen):
-        if self.average_agent_energy() < .9 :
+        if self.total_agent_energy() < self.embodied_energy :
             self.respawn_entity(pollen)
         else:
             self.remove_entity(pollen)
+
+
+    def process_event(self,event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEUP: 
+            self.embodied_energy += 0.05
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEDOWN:
+            self.embodied_energy -= 0.05
+        super().process_event(event)
 
  
 

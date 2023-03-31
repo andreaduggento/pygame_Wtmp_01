@@ -1,0 +1,13 @@
+Agent: annNemo_mnmqzzdywu Energy components: [0.10340000000000091 0.10276658080827655 0.10411835080237569 1.3500000000000005] Current energy:  0.5397150683893481
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.3403,  1.8564,  0.1375],
+        [ 0.5305,  0.7629, -0.2888],
+        [ 0.7026,  0.3303,  0.1728]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1850, -0.0632,  0.2259])

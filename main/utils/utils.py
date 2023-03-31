@@ -1,4 +1,14 @@
 import pygame
+import random
+import string
+
+
+lowercaseletters = string.ascii_lowercase
+
+def randomname(lenght):
+    string= ''.join(random.choice(lowercaseletters) for i in range(lenght))
+    return string
+
 
 def blitRotateCenteredRef(surf, image, pos, originPos, angle, display_width , display_height ):
 

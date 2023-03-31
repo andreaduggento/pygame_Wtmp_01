@@ -1,0 +1,546 @@
+Agent: annNemo17_ Energy components: [0.027199999999999946 0.027193292186393013 0.005702917223491417 0.6] Current energy:  0.5399037905901161
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.3333,  1.7925,  0.1167],
+        [ 0.6815,  0.7208, -0.4751],
+        [ 0.7266,  0.3533,  0.1645]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1649,  0.1749,  0.1181])
+Agent: annNemo10_ Energy components: [0.03299999999999991 0.03297785576022995 0.025740025627172317 0.6] Current energy:  0.5082821186125983
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1067,  1.8256,  0.1655],
+        [ 0.5987,  0.5958, -0.4154],
+        [ 0.6213,  0.1443,  0.1555]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2273, -0.0252, -0.0240])
+Agent: annNemo16_ Energy components: [0.0343999999999999 0.03439974142873527 0.02337088863021233 0.6] Current energy:  0.5078293699410528
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2717,  1.8440,  0.1948],
+        [ 0.5533,  0.8534, -0.5045],
+        [ 0.6701,  0.3732,  0.2410]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0957,  0.0583,  0.3241])
+Agent: annNemo11_ Energy components: [0.03679999999999989 0.03670477562859088 0.013579955836679633 0.6] Current energy:  0.5129152685347298
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1772,  1.8681,  0.1020],
+        [ 0.6750,  0.7796, -0.3573],
+        [ 0.7238,  0.4083,  0.2519]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2251,  0.0642,  0.1994])
+Agent: annNemo14_ Energy components: [0.06699999999999987 0.0664094871862155 0.025257416026007517 0.7000000000000001] Current energy:  0.5413330967877787
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2732,  1.6476,  0.0767],
+        [ 0.9749,  0.7389, -0.2297],
+        [ 0.6699,  0.4264,  0.1006]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1724,  0.0572, -0.0322])
+Agent: annNemo_umrswxljwk Energy components: [0.034199999999999904 0.03417568146316809 0.012969775870710213 0.6] Current energy:  0.5186545426661218
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1778,  1.8685,  0.0983],
+        [ 0.6806,  0.7882, -0.3610],
+        [ 0.7085,  0.4033,  0.2458]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2291,  0.0662,  0.1931])
+Agent: annNemo12_ Energy components: [0.0786000000000002 0.07853123132042943 0.04879496825446002 0.8000000000000002] Current energy:  0.5940738004251118
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2779,  1.8845,  0.3867],
+        [ 0.7452,  0.7456, -0.3473],
+        [ 0.7478,  0.2380,  0.3461]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0482,  0.0560,  0.1876])
+Agent: annNemo13_ Energy components: [0.0788000000000002 0.07664492218999824 0.0694293635753263 0.7500000000000001] Current energy:  0.5251257142346764
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2165,  1.7602,  0.2088],
+        [ 0.6442,  0.6962, -0.4627],
+        [ 0.6191,  0.3553,  0.0559]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1950,  0.1022,  0.0513])
+Agent: annNemo_jffojuhbxx Energy components: [0.05259999999999979 0.04770188332456357 0.0627389209141056 0.7000000000000001] Current energy:  0.536959195761332
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2702,  1.8361,  0.2096],
+        [ 0.5691,  0.8369, -0.4944],
+        [ 0.6719,  0.3673,  0.2241]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0989,  0.0601,  0.3250])
+Agent: annNemo10_ Energy components: [0.08740000000000045 0.08698827483959802 0.04712315021478362 1.2500000000000004] Current energy:  0.5284885749456198
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1067,  1.8256,  0.1655],
+        [ 0.5987,  0.5958, -0.4154],
+        [ 0.6213,  0.1443,  0.1555]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2273, -0.0252, -0.0240])
+Agent: annNemo15_ Energy components: [0.0894000000000005 0.08871836877217353 0.06832925399505707 0.7500000000000001] Current energy:  0.5035523772327701
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.4628,  1.8048,  0.0359],
+        [ 0.8726,  0.7003, -0.4383],
+        [ 0.6362,  0.2439,  0.0936]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1950,  0.0003,  0.2500])
+Agent: annNemo18_ Energy components: [0.09100000000000055 0.08809509158203828 0.06386284416324547 0.7500000000000001] Current energy:  0.507042064254716
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1328,  1.7525,  0.1084],
+        [ 0.6574,  0.8063, -0.2903],
+        [ 0.7949,  0.4143,  0.2239]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0873,  0.0614,  0.1807])
+Agent: annNemo_umrswxljwk Energy components: [0.05999999999999975 0.05996323100562117 0.018482757925857806 1.1500000000000004] Current energy:  0.5115540110685206
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1778,  1.8685,  0.0983],
+        [ 0.6806,  0.7882, -0.3610],
+        [ 0.7085,  0.4033,  0.2458]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2291,  0.0662,  0.1931])
+Agent: annNemo17_ Energy components: [0.0996000000000008 0.09860457266976674 0.07951563815696519 1.3500000000000005] Current energy:  0.5722797891732705
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.3333,  1.7925,  0.1167],
+        [ 0.6815,  0.7208, -0.4751],
+        [ 0.7266,  0.3533,  0.1645]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1649,  0.1749,  0.1181])
+Agent: annNemo_vphvgiqtwy Energy components: [0.032399999999999915 0.03211332585011661 0.029652889999692483 0.6] Current energy:  0.5058337841501912
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1846,  1.8937,  0.0962],
+        [ 0.6690,  0.7986, -0.3539],
+        [ 0.7026,  0.4138,  0.2457]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2174,  0.0801,  0.1832])
+Agent: annNemo11_ Energy components: [0.10420000000000093 0.10398755977038966 0.05895661131012489 1.3000000000000005] Current energy:  0.5328558289194869
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1772,  1.8681,  0.1020],
+        [ 0.6750,  0.7796, -0.3573],
+        [ 0.7238,  0.4083,  0.2519]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2251,  0.0642,  0.1994])
+Agent: annNemo12_ Energy components: [0.10940000000000108 0.10931537914251588 0.05372396606480886 1.3500000000000005] Current energy:  0.5775606547926777
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2779,  1.8845,  0.3867],
+        [ 0.7452,  0.7456, -0.3473],
+        [ 0.7478,  0.2380,  0.3461]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0482,  0.0560,  0.1876])
+Agent: annNemo18_ Energy components: [0.11400000000000121 0.11084971582193322 0.08621812440688481 1.3500000000000005] Current energy:  0.5389321597711823
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1328,  1.7525,  0.1084],
+        [ 0.6574,  0.8063, -0.2903],
+        [ 0.7949,  0.4143,  0.2239]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0873,  0.0614,  0.1807])
+Agent: annNemo_mumuhblghu Energy components: [0.08360000000000034 0.08316643336354748 0.052564470524414666 0.7500000000000001] Current energy:  0.5306690961120384
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.0936,  1.8244,  0.1764],
+        [ 0.6151,  0.5811, -0.4312],
+        [ 0.6084,  0.1423,  0.1522]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2282, -0.0199, -0.0326])
+Agent: annNemo11_ Energy components: [0.11800000000000133 0.1177842857901843 0.06044544026936537 1.800000000000001] Current energy:  0.5037702739404524
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1772,  1.8681,  0.1020],
+        [ 0.6750,  0.7796, -0.3573],
+        [ 0.7238,  0.4083,  0.2519]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2251,  0.0642,  0.1994])
+Agent: annNemo_aynpikrzbh Energy components: [0.04779999999999982 0.04777491033826923 0.03865254332841877 0.65] Current energy:  0.5157725463333123
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2616,  1.8892,  0.3782],
+        [ 0.7279,  0.7547, -0.3317],
+        [ 0.7606,  0.2528,  0.3464]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0482,  0.0514,  0.2041])
+Agent: annNemo_jffojuhbxx Energy components: [0.0960000000000007 0.08376197823148504 0.13716351571283597 1.3500000000000005] Current energy:  0.5330745060556801
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2702,  1.8361,  0.2096],
+        [ 0.5691,  0.8369, -0.4944],
+        [ 0.6719,  0.3673,  0.2241]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0989,  0.0601,  0.3250])
+Agent: annNemo18_ Energy components: [0.13360000000000177 0.1304174754605655 0.09491483634447546 1.900000000000001] Current energy:  0.5410676881949603
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1328,  1.7525,  0.1084],
+        [ 0.6574,  0.8063, -0.2903],
+        [ 0.7949,  0.4143,  0.2239]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0873,  0.0614,  0.1807])
+Agent: annNemo11_ Energy components: [0.13700000000000187 0.1367785618504014 0.06522414897430193 2.3499999999999996] Current energy:  0.510997289175299
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1772,  1.8681,  0.1020],
+        [ 0.6750,  0.7796, -0.3573],
+        [ 0.7238,  0.4083,  0.2519]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2251,  0.0642,  0.1994])
+Agent: annNemo14_ Energy components: [0.1376000000000019 0.13108754274065995 0.0687770569857077 1.3500000000000005] Current energy:  0.5125354002736353
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2732,  1.6476,  0.0767],
+        [ 0.9749,  0.7389, -0.2297],
+        [ 0.6699,  0.4264,  0.1006]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1724,  0.0572, -0.0322])
+Agent: annNemo13_ Energy components: [0.13940000000000194 0.1372339719341197 0.1348892353907341 1.4500000000000006] Current energy:  0.5384767926751484
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2165,  1.7602,  0.2088],
+        [ 0.6442,  0.6962, -0.4627],
+        [ 0.6191,  0.3553,  0.0559]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1950,  0.1022,  0.0513])
+Agent: annNemo_mwedbsdxvc Energy components: [0.06259999999999974 0.06237517782843966 0.053659469119235484 0.7000000000000001] Current energy:  0.5213653530523259
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2283,  1.7451,  0.2150],
+        [ 0.6505,  0.6866, -0.4855],
+        [ 0.6227,  0.3540,  0.0561]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2004,  0.1116,  0.0504])
+Agent: annNemo15_ Energy components: [0.141800000000002 0.1410613787816739 0.1140107154734445 1.4000000000000006] Current energy:  0.5031279057448832
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.4628,  1.8048,  0.0359],
+        [ 0.8726,  0.7003, -0.4383],
+        [ 0.6362,  0.2439,  0.0936]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1950,  0.0003,  0.2500])
+Agent: annNemo_mlhcgtoick Energy components: [0.057399999999999764 0.05562867819444804 0.06115795666728257 0.7000000000000001] Current energy:  0.5258133651382704
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2734,  1.8301,  0.2349],
+        [ 0.5749,  0.8391, -0.4876],
+        [ 0.6868,  0.3617,  0.2198]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1003,  0.0729,  0.3193])
+Agent: annNemo_otfpxphmfi Energy components: [0.05819999999999976 0.05813837442975919 0.041445173378725844 0.7000000000000001] Current energy:  0.5422164521915158
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1187,  1.8250,  0.1431],
+        [ 0.6051,  0.5764, -0.4266],
+        [ 0.6309,  0.1525,  0.1722]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2233, -0.0220, -0.0353])
+Agent: annNemo17_ Energy components: [0.14660000000000215 0.1443983914422147 0.10727035222579782 1.900000000000001] Current energy:  0.5017312563319909
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.3333,  1.7925,  0.1167],
+        [ 0.6815,  0.7208, -0.4751],
+        [ 0.7266,  0.3533,  0.1645]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1649,  0.1749,  0.1181])
+Agent: annNemo_umrswxljwk Energy components: [0.1136000000000012 0.11337233997938881 0.04589402106991519 1.800000000000001] Current energy:  0.5271336389506958
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1778,  1.8685,  0.0983],
+        [ 0.6806,  0.7882, -0.3610],
+        [ 0.7085,  0.4033,  0.2458]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2291,  0.0662,  0.1931])
+Agent: annNemo12_ Energy components: [0.1520000000000023 0.1518754114980454 0.07564929680419165 1.900000000000001] Current energy:  0.5204752916977664
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2779,  1.8845,  0.3867],
+        [ 0.7452,  0.7456, -0.3473],
+        [ 0.7478,  0.2380,  0.3461]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0482,  0.0560,  0.1876])
+Agent: annNemo_hfettkjlyh Energy components: [0.04499999999999984 0.04273455955397464 0.006745159950105616 0.6] Current energy:  0.5055202804959205
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2898,  1.8958,  0.3888],
+        [ 0.7273,  0.7438, -0.3596],
+        [ 0.7516,  0.2522,  0.3398]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0453,  0.0565,  0.1707])
+Agent: annNemo_tstnqrntgg Energy components: [0.050399999999999806 0.050046016319470595 0.04204931149969638 0.65] Current energy:  0.5075046721808338
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1802,  1.8801,  0.1113],
+        [ 0.6696,  0.7613, -0.3474],
+        [ 0.7135,  0.4229,  0.2478]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2152,  0.0505,  0.1889])
+Agent: annNemo_pqyiyrwhhb Energy components: [0.06719999999999987 0.06602936337677603 0.02803245590293063 0.7000000000000001] Current energy:  0.5387381807202936
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.4701,  1.8150,  0.0339],
+        [ 0.8863,  0.6995, -0.4183],
+        [ 0.6464,  0.2405,  0.0852]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2071,  0.0204,  0.2661])
+Agent: annNemo_mumuhblghu Energy components: [0.12660000000000157 0.1261065046036923 0.09051607450055695 1.3500000000000005] Current energy:  0.5067774208957514
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.0936,  1.8244,  0.1764],
+        [ 0.6151,  0.5811, -0.4312],
+        [ 0.6084,  0.1423,  0.1522]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2282, -0.0199, -0.0326])
+Agent: annNemo13_ Energy components: [0.16160000000000257 0.15943301068289834 0.13559025639059544 2.000000000000001] Current energy:  0.5433767329265091
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2165,  1.7602,  0.2088],
+        [ 0.6442,  0.6962, -0.4627],
+        [ 0.6191,  0.3553,  0.0559]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1950,  0.1022,  0.0513])
+Agent: annNemo_umrswxljwk Energy components: [0.13000000000000167 0.1297720235788095 0.04666030199087515 2.3499999999999996] Current energy:  0.5435676744303157
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.1778,  1.8685,  0.0983],
+        [ 0.6806,  0.7882, -0.3610],
+        [ 0.7085,  0.4033,  0.2458]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.2291,  0.0662,  0.1931])
+Agent: annNemo_arrzlgmkll Energy components: [0.06719999999999987 0.06666600094461603 0.05492319749127045 0.7000000000000001] Current energy:  0.5112108015641144
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.3337,  1.7957,  0.1153],
+        [ 0.6936,  0.7161, -0.4764],
+        [ 0.7291,  0.3380,  0.1776]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1431,  0.1728,  0.1262])
+Agent: annNemo_rnqosvxwpj Energy components: [0.10020000000000082 0.09343636945747479 0.07384330088965303 0.8000000000000002] Current energy:  0.5325203296528747
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2825,  1.6443,  0.0484],
+        [ 0.9682,  0.7292, -0.2524],
+        [ 0.6673,  0.4314,  0.1055]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.1701,  0.0690, -0.0318])
+Agent: annNemo_jffojuhbxx Energy components: [0.13360000000000177 0.12075677252636254 0.16657466554874462 1.950000000000001] Current energy:  0.5290685619248943
+Sequential(
+  (0): Linear(in_features=3, out_features=3, bias=True)
+  (1): Tanh()
+)
+0.weight torch.Size([3, 3]) False
+Parameter containing:
+tensor([[ 0.2702,  1.8361,  0.2096],
+        [ 0.5691,  0.8369, -0.4944],
+        [ 0.6719,  0.3673,  0.2241]])
+0.bias torch.Size([3]) False
+Parameter containing:
+tensor([-0.0989,  0.0601,  0.3250])
