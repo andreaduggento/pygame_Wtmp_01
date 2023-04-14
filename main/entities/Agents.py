@@ -30,13 +30,15 @@ class Agent(OrientedEntity):
         self.metabolicspeed = self.metabolic_rate / self.MAX_FORCE  # active energy consumption per unit of force, per unit of DeltaT
         self.metabolicomega = self.metabolic_rate                # active energy consumption per unit of force, per unit of omega
         self.energyTotInOut = np.zeros(4)
+        self.fertility = True
 
     def update(self,sim):
         if (self.energy < 0.):
             self.die(sim)
-        if (self.energy > 2*self.DefaultEnergy):
-            self.energy -= self.DefaultEnergy
-            sim.agent_born(self)
+        if self.fertility:
+            if (self.energy > 2*self.DefaultEnergy):
+                self.energy -= self.DefaultEnergy
+                sim.agent_born(self)
 
         while self.orientation > math.pi:
             self.orientation -= 2*math.pi

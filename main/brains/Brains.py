@@ -119,7 +119,18 @@ class rnnBrain(nn.Module):
         self._freeze_param()
 
         if parentnet==None:
+            self.init_brainA1()
+        else:
             with torch.no_grad():
+                self.net.weight_ih_l0 =   nn.Parameter( parentnet.weight_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE,3))), requires_grad=False)
+                self.net.weight_hh_l0 =   nn.Parameter( parentnet.weight_hh_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE,self.HIDDEN_SIZE))), requires_grad=False)
+                self.net.bias_ih_l0 =   nn.Parameter( parentnet.bias_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE))), requires_grad=False)
+                self.net.bias_ih_l0 =   nn.Parameter( parentnet.bias_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE))), requires_grad=False)
+
+    def init_brainA1(self):
+        ii = np.random.randint(1,3)
+#        if ii == 1:
+        with torch.no_grad():
                 self.net.weight_ih_l0 = nn.Parameter(torch.tensor(np.array(
                     [[-0.0706, -0.1586,  0.1262],
                     [-0.1394, -0.0662, -0.0818],
@@ -144,12 +155,6 @@ class rnnBrain(nn.Module):
                 self.net.bias_hh_l0 = nn.Parameter(torch.tensor(
                      np.array([0.2261, 0.1568, 0.2925, 0.3509, 0.1058, 0.1845]) + np.random.normal(loc=0.0, scale=.001, size=(self.HIDDEN_SIZE))
                     ), requires_grad=False)
-        else:
-            with torch.no_grad():
-                self.net.weight_ih_l0 =   nn.Parameter( parentnet.weight_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE,3))), requires_grad=False)
-                self.net.weight_hh_l0 =   nn.Parameter( parentnet.weight_hh_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE,self.HIDDEN_SIZE))), requires_grad=False)
-                self.net.bias_ih_l0 =   nn.Parameter( parentnet.bias_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE))), requires_grad=False)
-                self.net.bias_ih_l0 =   nn.Parameter( parentnet.bias_ih_l0 +torch.tensor(np.random.normal(loc=0.0, scale=.01, size=(self.HIDDEN_SIZE))), requires_grad=False)
 
     def _freeze_param(self):
         for k,v in self.named_parameters():

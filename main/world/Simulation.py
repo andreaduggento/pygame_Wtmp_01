@@ -273,6 +273,25 @@ class CambrianZoo(Simulation):
                     self.add_entity(shark)
 
 
+class TestingZoo(Simulation):
+    pollen_threshold = 0.9
+
+    def populate_zoo(self):
+        print("create simulation")
+        #### POLLEN
+        for i in range(1,180):
+            pollen = Pollen(self ,  (random.randint(100, 1000),random.randint(100, 1000)), "pollenflake{}".format(i) )       
+            self.add_entity(pollen)
+        #### NEMO
+        nemo = NemoBrain(self , (500,300) ,"nemo1" )       
+        self.add_entity(nemo)
+        self.target = nemo
+        self.interactiveagents.append(nemo)
+        
+        self.embodied_energy = self.total_agent_energy()
+
+
+
 class EdiacaranZoo(Simulation):
 
     intelligent_agent_surface_density = 1.0e-5

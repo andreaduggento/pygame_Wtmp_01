@@ -24,7 +24,7 @@ def start():
     WORLDSIZE=[x-100,y-100]
     print(WORLDSIZE)
 #    simulation = SimulationFlock(WORLDSIZE)
-    simulation = EdiacaranZoo(WORLDSIZE, agentstatFile = file1 ,  printreproductiveAgent = True )
+    simulation = TestingZoo(WORLDSIZE, agentstatFile = file1 ,  printreproductiveAgent = True )
     
     counter = 0
     
