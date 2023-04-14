@@ -11,8 +11,8 @@ from main.brains.Brains import *
 
 
 class Agent(OrientedEntity):
-    def __init__(self, simulation, position, name):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition, position, name):
+        super().__init__(simulation, tileposition, position, name)
         self.vel = np.asarray([0.,0.])
         self.acc = np.asarray([0.,0.])
         self.force= 0.
@@ -118,8 +118,8 @@ class Agent(OrientedEntity):
 
 
 class InteractiveAgent(Agent):
-    def __init__(self, simulation, position, name):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition, position, name):
+        super().__init__(simulation, tileposition, position, name)
         self.Kleft=False
         self.Kright=False
         self.Kup=False
@@ -163,8 +163,8 @@ class InteractiveAgent(Agent):
 
 class IntelligentAgent(Agent):
 
-    def __init__(self, simulation, position, name, brain=None ):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition, position, name, brain=None ):
+        super().__init__(simulation, tileposition, position, name)
         self.omega=0.05*self.MAX_OMEGA
         self.neyes = 3
         self.eyerange = 150 
@@ -269,12 +269,12 @@ class IntelligentAgent(Agent):
 
 
 class annAgent(IntelligentAgent):
-    def __init__(self, simulation, position, name, brain=None ):
+    def __init__(self, simulation, tileposition, position, name, brain=None ):
         if brain==None : 
             self.brain = annBrain(3,3)
         else: 
             self.brain = brain
-        super().__init__(simulation, position, name)
+        super().__init__(simulation, tileposition, position, name)
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A04_32.png")
@@ -287,12 +287,12 @@ class annAgent(IntelligentAgent):
         return offspring
 
 class rnnAgent(IntelligentAgent):
-    def __init__(self, simulation, position, name, brain=None ):
+    def __init__(self, simulation, tileposition, position, name, brain=None ):
         if brain==None : 
             self.brain = rnnBrain(3,3)
         else: 
             self.brain = brain
-        super().__init__(simulation, position, name)
+        super().__init__(simulation, tileposition, position, name)
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A02_32.png")
@@ -308,7 +308,7 @@ class rnnAgent(IntelligentAgent):
 
     def draw(self, world):
         super().draw(world)
-        pygame.draw.circle(world.screen, BLACK , [self.position[0], world.size[1]-self.position[1]] , 6)
-        pygame.draw.circle(world.screen, self.energycolor , [self.position[0], world.size[1]-self.position[1]] , 4)
+        pygame.draw.circle(world.screen, BLACK , self.screenposition , 6)
+        pygame.draw.circle(world.screen, self.energycolor , self.screenposition , 4)
 
 

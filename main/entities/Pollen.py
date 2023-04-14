@@ -8,8 +8,8 @@ from main.utils.colors import *
 
 class Pollen(Entity):
 
-    def __init__(self, simulation, position, name):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition , position, name):
+        super().__init__(simulation, tileposition, position, name)
         #self.load_image()
         self.radius = 5.
         self.color  = PALERED

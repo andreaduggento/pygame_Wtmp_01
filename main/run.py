@@ -20,11 +20,12 @@ def start():
     screen = pygame.display.set_mode()
  
     # get the default size
-    x, y = screen.get_size()
-    WORLDSIZE=[x-100,y-100]
+    x, y = screen.get_size()    # Dimension in pixels
+    TILESIZE=160                # Dimention of squared tiles the world is plastered by
+    WORLDSIZE=[x//TILESIZE,y//TILESIZE]   # World size expressed in tiles
     print(WORLDSIZE)
 #    simulation = SimulationFlock(WORLDSIZE)
-    simulation = EdiacaranZoo(WORLDSIZE, agentstatFile = file1 ,  printreproductiveAgent = True )
+    simulation = EdiacaranZoo(TILESIZE,WORLDSIZE, agentstatFile = file1 ,  printreproductiveAgent = True )
     
     counter = 0
     

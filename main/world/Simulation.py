@@ -21,14 +21,14 @@ class Simulation:
     FRICTION = 1.
 
 
-    def __init__(self,worldsize, agentstatFile = None , decimationstatFile = None ,  printreproductiveAgent = True ):
+    def __init__(self,tilesize,worldsize, agentstatFile = None , decimationstatFile = None ,  printreproductiveAgent = True ):
         self.size=worldsize
         self.entities = []
         self.pollens = []
         self.roundboundaries = []
         self.agents = []
         self.interactiveagents = []
-        self.world = World(worldsize)
+        self.world = World(tilesize,worldsize)
         self.populate_zoo()
         self.next_spot_time = datetime.now()
         self.next_step_time = datetime.now()
@@ -280,10 +280,12 @@ class TestingZoo(Simulation):
         print("create simulation")
         #### POLLEN
         for i in range(1,180):
-            pollen = Pollen(self ,  (random.randint(100, 1000),random.randint(100, 1000)), "pollenflake{}".format(i) )       
+            randomtile = (random.randint(0, self.world.size[0]-1),random.randint(0, self.world.size[1]-1))
+            randompos  = (random.uniform(0, self.world.tilesize),random.uniform(0, self.world.tilesize))
+            pollen = Pollen(self ,  randomtile, randompos , "pollenflake{}".format(i) )       
             self.add_entity(pollen)
         #### NEMO
-        nemo = NemoBrain(self , (500,300) ,"nemo1" )       
+        nemo = NemoBrain(self , (1 , 1 ) , (0.1,0.1) ,"nemo1" )       
         self.add_entity(nemo)
         self.target = nemo
         self.interactiveagents.append(nemo)

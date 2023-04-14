@@ -8,8 +8,8 @@ class NemoFish(InteractiveAgent):
 
     MAX_CAPACITY = 1
 
-    def __init__(self, simulation, position, name):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition, position, name):
+        super().__init__(simulation, tileposition, position, name)
 
     def load_image(self):
         self.image = pygame.image.load("main/images/prototype_A01_32.png")
@@ -39,8 +39,8 @@ class NemoBrain(rnnAgent):
 
     MAX_CAPACITY = 1
 
-    def __init__(self, simulation, position, name):
-        super().__init__(simulation, position, name)
+    def __init__(self, simulation, tileposition, position, name):
+        super().__init__(simulation, tileposition, position, name)
         self.vel = np.asarray([0.,0.])
         self.acc = np.asarray([0.,0.])
         self.force= 0.
